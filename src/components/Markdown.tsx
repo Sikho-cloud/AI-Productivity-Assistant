@@ -48,7 +48,7 @@ export function Markdown({ content }: { content: string }) {
   };
   const flushTable = () => {
     if (!table.length) return;
-    const [head, ...rows] = table;
+    const [head = [], ...rows] = table;
     blocks.push(
       <div key={`t${blocks.length}`} className="my-4 overflow-x-auto rounded-xl border">
         <table className="w-full text-left text-sm">
@@ -103,18 +103,18 @@ export function Markdown({ content }: { content: string }) {
 
     const h = /^(#{1,6})\s+(.*)$/.exec(line);
     if (h) {
-      const level = h[1].length;
+      const level = (h[1] ?? "").length;
       blocks.push(
         level <= 2 ? (
           <h3
             key={idx}
             className="mt-5 mb-2 text-base font-semibold tracking-tight text-foreground first:mt-0"
           >
-            {inline(h[2])}
+            {inline(h[2] ?? "")}
           </h3>
         ) : (
           <h4 key={idx} className="mt-4 mb-1.5 text-sm font-semibold text-foreground">
-            {inline(h[2])}
+            {inline(h[2] ?? "")}
           </h4>
         ),
       );
